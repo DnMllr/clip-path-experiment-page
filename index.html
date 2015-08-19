@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        body {
+            animation-name: blur;
+            animation-duration: 1s;
+            animation-timing-function: ease-in;
+        }
+
+        #background {
+            width: 100%;
+            height: 200%;
+            position: absolute;
+            z-index: -1;
+            background: linear-gradient(211deg, #93278F, #00A99D);
+            /* background: url('http://www.travelmediakit.com/wp-content/themes/questex-travel/images/src/bg/travel-agents.jpg'); */
+            animation-name: updown;
+            animation-duration: 10s;
+            animation-iteration-count: infinite;
+        }
+
+        #clipper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #clippee {
+            background: linear-gradient(38deg, #00A8C5, #FFFF7E);
+            /* background: url('http://incentivetravelgroup.com/wp-content/uploads/2014/08/travel-agent.jpg'); */
+            width: 100%;
+            height: 200%;
+            animation-name: updown;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+        }
+
+        @-webkit-keyframes blur {
+            0% {
+                -webkit-filter: blur(0px);
+                filter: blur(0px) saturate(0%);
+            }
+            50% {
+                -webkit-filter: blur(5px);
+                filter: blur(5px) saturate(100%);
+            }
+            100$ {
+                -webkit-filter: blur(0px);
+                filter: blur(0px) saturate(0%);
+            }
+        }
+
+        @keyframes blur {
+            0% {
+                -webkit-filter: blur(0px);
+                filter: blur(0px) saturate(0%);
+            }
+            50% {
+                -webkit-filter: blur(5px);
+                filter: blur(5px) saturate(100%);
+            }
+            100$ {
+                -webkit-filter: blur(0px);
+                filter: blur(0px) saturate(0%);
+            }
+        }
+
+        @-webkit-keyframes updown {
+            0% {
+                transform: translate3d(0%, 0%, 0px);
+            }
+            50% {
+                transform: translate3d(0%, -50%, 0px);
+            }
+            100% {
+                transform: translate3d(0%, 0%, 0px);
+            }
+        }
+
+        @keyframes updown {
+            0% {
+                transform: translate3d(0%, 0%, 0px);
+            }
+            50% {
+                transform: translate3d(0%, -50%, 0px);
+            }
+            100% {
+                transform: translate3d(0%, 0%, 0px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="background">
+    </div>
+    <div class="full" id="clipper">
+        <div class="full" id="clippee">
+        </div>
+    </div>
+    <script>
+        var clipper = document.getElementById('clipper');
+        var num_points = 30;
+
+        function makePoint () {
+            return [
+                Math.random(),
+                Math.random(),
+                ( Math.random() - 0.5 ) / 500,
+                ( Math.random() - 0.5 ) / 500
+            ];
+        }
+
+        var points = [];
+
+        for ( var i = 0 ; i < num_points ; i++ ) points.push( makePoint() );
+
+        function make_percent ( item ) {
+            return ( item * 100 );
+        }
+
+        function update_path () {
+
+            var coord;
+            var changed = false;
+            var res = 'polygon(';
+            for ( var i = 0 ; i < num_points ; i++ ) {
+                coord = points[ i ];
+                coord[ 0 ] += coord[ 2 ];
+                coord[ 1 ] += coord[ 3 ];
+                for ( var j = 0 ; j < 2 ; j++ ) {
+                    if ( coord[ j ] < 0 ) {
+                        coord[ j ] = 0;
+                        changed = true;
+                    }
+                    if ( coord[ j ] > 1 ) {
+                        coord[ j ] = 1;
+                        changed = true;
+                    }
+                    if ( changed ) {
+                        changed = false;
+                        coord[ j + 2 ] -= coord[ j + 2 ] * 2;
+                    }
+                }
+                res += make_percent( coord[ 0 ] ) + "% " + make_percent( coord[ 1 ] ) + "% " + ( i === num_points - 1  ? ")" : ", " );
+            }
+
+            clipper.style.webkitClipPath = res;
+            clipper.style.clipPath = res;
+
+            requestAnimationFrame( update_path );
+
+        }
+
+        requestAnimationFrame( update_path );
+
+    </script>
+</body>
