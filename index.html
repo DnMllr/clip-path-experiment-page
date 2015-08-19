@@ -98,8 +98,8 @@
         </div>
     </div>
     <script>
-        var clipper = document.getElementById('clipper');
-        var num_points = 1200;
+        var clipper = document.getElementById( 'clipper' );
+        var numPoints = 1200;
 
         function makePoint () {
             return [
@@ -112,18 +112,18 @@
 
         var points = [];
 
-        for ( var i = 0 ; i < num_points ; i++ ) points.push( makePoint() );
+        for ( var i = 0 ; i < numPoints ; i++ ) points.push( makePoint() );
 
-        function make_percent ( item ) {
+        function makePercent ( item ) {
             return ( item * 100 );
         }
 
-        function update_path () {
+        function updatePath () {
 
             var coord;
             var changed = false;
             var res = 'polygon(';
-            for ( var i = 0 ; i < num_points ; i++ ) {
+            for ( var i = 0 ; i < numPoints ; i++ ) {
                 coord = points[ i ];
                 coord[ 0 ] += coord[ 2 ];
                 coord[ 1 ] += coord[ 3 ];
@@ -141,17 +141,17 @@
                         coord[ j + 2 ] -= coord[ j + 2 ] * 2;
                     }
                 }
-                res += make_percent( coord[ 0 ] ) + "% " + make_percent( coord[ 1 ] ) + "% " + ( i === num_points - 1  ? ")" : ", " );
+                res += makePercent( coord[ 0 ] ) + "% " + makePercent( coord[ 1 ] ) + "% " + ( i === numPoints - 1  ? ")" : ", " );
             }
 
             clipper.style.webkitClipPath = res;
             clipper.style.clipPath = res;
 
-            requestAnimationFrame( update_path );
+            requestAnimationFrame( updatePath );
 
         }
 
-        requestAnimationFrame( update_path );
+        requestAnimationFrame( updatePath );
 
     </script>
 </body>
