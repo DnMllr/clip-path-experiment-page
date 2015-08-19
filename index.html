@@ -10,8 +10,8 @@
 
         body {
             animation-name: blur;
-            animation-duration: 1s;
-            animation-timing-function: ease-in;
+            animation-duration: 4s;
+            animation-easing-function: ease-in;
         }
 
         #background {
@@ -19,6 +19,7 @@
             height: 200%;
             position: absolute;
             z-index: -1;
+            /* background: linear-gradient(200deg, #00A8C5, #FFFF7E); */
             background: linear-gradient(211deg, #93278F, #00A99D);
             /* background: url('http://www.travelmediakit.com/wp-content/themes/questex-travel/images/src/bg/travel-agents.jpg'); */
             animation-name: updown;
@@ -38,18 +39,14 @@
             width: 100%;
             height: 200%;
             animation-name: updown;
-            animation-duration: 4s;
+            animation-duration: 12s;
             animation-iteration-count: infinite;
         }
 
         @-webkit-keyframes blur {
             0% {
-                -webkit-filter: blur(0px);
-                filter: blur(0px) saturate(0%);
-            }
-            50% {
-                -webkit-filter: blur(5px);
-                filter: blur(5px) saturate(100%);
+                -webkit-filter: blur(40px);
+                filter: blur(40px) saturate(100%);
             }
             100$ {
                 -webkit-filter: blur(0px);
@@ -59,12 +56,8 @@
 
         @keyframes blur {
             0% {
-                -webkit-filter: blur(0px);
-                filter: blur(0px) saturate(0%);
-            }
-            50% {
-                -webkit-filter: blur(5px);
-                filter: blur(5px) saturate(100%);
+                -webkit-filter: blur(40px);
+                filter: blur(40px) saturate(100%);
             }
             100$ {
                 -webkit-filter: blur(0px);
@@ -106,7 +99,7 @@
     </div>
     <script>
         var clipper = document.getElementById('clipper');
-        var num_points = 30;
+        var num_points = 1200;
 
         function makePoint () {
             return [
